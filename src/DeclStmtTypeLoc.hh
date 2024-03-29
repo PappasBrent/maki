@@ -4,10 +4,8 @@
 #include "clang/AST/Stmt.h"
 #include "clang/AST/TypeLoc.h"
 
-namespace cpp2c
-{
-    class DeclStmtTypeLoc
-    {
+namespace cpp2c {
+class DeclStmtTypeLoc {
     private:
         inline void assertOneNonNull();
 
@@ -23,5 +21,5 @@ namespace cpp2c
         void dump();
 
         clang::SourceRange getSourceRange();
-    };
+};
 } // namespace cpp2c
