@@ -17,6 +17,7 @@
     - [Resetting](#resetting)
     - [Replicating major paper results (all results)](#replicating-major-paper-results-all-results)
     - [Uninstalling](#uninstalling)
+  - [Development](#development)
 
 ## Purpose
 
@@ -372,3 +373,17 @@ docker system prune -f
 **Note**: This will tell Docker to delete all cached data that it is not
 currently using, so be careful not to delete any cached data you may want to
 keep!
+
+## Development
+
+If you would like to contribute to Maki, please first install
+[ClangFormat](https://clang.llvm.org/docs/ClangFormat.html). On Ubuntu you can
+install ClangFormat by running:
+
+```bash
+sudo apt install clang-format
+```
+
+Please format all your changes to Maki's C++ code with ClangFormat before
+committing them. This is to ensure that the project's coding style remains
+consistent.

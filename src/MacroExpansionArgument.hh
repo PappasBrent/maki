@@ -2,17 +2,15 @@
 
 #include "DeclStmtTypeLoc.hh"
 
-#include "llvm/ADT/StringRef.h"
-#include "clang/Basic/SourceManager.h"
 #include "clang/Basic/LangOptions.h"
+#include "clang/Basic/SourceManager.h"
 #include "clang/Lex/Token.h"
+#include "llvm/ADT/StringRef.h"
 
 #include <vector>
 
-namespace cpp2c
-{
-    class MacroExpansionArgument
-    {
+namespace cpp2c {
+class MacroExpansionArgument {
     public:
         // The name of the parameter this argument expands
         llvm::StringRef Name;
@@ -28,8 +26,7 @@ namespace cpp2c
         unsigned int NumExpansions = 0;
 
         // Prints information the AST nodes aligned with this argument
-        void dumpASTInfo(llvm::raw_fd_ostream &OS,
-                         clang::SourceManager &SM,
+        void dumpASTInfo(llvm::raw_fd_ostream &OS, clang::SourceManager &SM,
                          const clang::LangOptions &LO);
-    };
+};
 } // namespace cpp2c

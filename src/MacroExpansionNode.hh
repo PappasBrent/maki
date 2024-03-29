@@ -1,7 +1,7 @@
 #pragma once
 
-#include "MacroExpansionArgument.hh"
 #include "DeclStmtTypeLoc.hh"
+#include "MacroExpansionArgument.hh"
 
 #include "clang/AST/Stmt.h"
 #include "clang/Basic/SourceLocation.h"
@@ -10,14 +10,11 @@
 #include "llvm/ADT/StringRef.h"
 #include "llvm/Support/raw_ostream.h"
 
-#include <vector>
 #include <set>
+#include <vector>
 
-namespace cpp2c
-{
-    class MacroExpansionNode
-    {
-
+namespace cpp2c {
+class MacroExpansionNode {
     public:
         // Info about the macro this is an expansion of
         clang::MacroInfo *MI;
@@ -73,15 +70,13 @@ namespace cpp2c
         void dumpMacroInfo(llvm::raw_fd_ostream &OS, unsigned int indent = 0);
         // Prints information about the AST nodes aligned with this expansion
         // and its arguments
-        void dumpASTInfo(
-            llvm::raw_fd_ostream &OS,
-            clang::SourceManager &SM,
-            const clang::LangOptions &LO);
+        void dumpASTInfo(llvm::raw_fd_ostream &OS, clang::SourceManager &SM,
+                         const clang::LangOptions &LO);
 
         // Returns the set of all macros expanded under this invocation.
         // Does not include macros passed to this macro's invocation as
         // arguments.
         std::set<MacroExpansionNode *> getDescendants();
-    };
+};
 
 } // namespace cpp2c

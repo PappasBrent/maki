@@ -2,16 +2,14 @@
 
 #include "MacroExpansionNode.hh"
 
-#include "clang/Lex/PPCallbacks.h"
 #include "clang/AST/ASTContext.h"
+#include "clang/Lex/PPCallbacks.h"
 
-#include <vector>
 #include <stack>
+#include <vector>
 
-namespace cpp2c
-{
-    class MacroForest : public clang::PPCallbacks
-    {
+namespace cpp2c {
+class MacroForest : public clang::PPCallbacks {
     public:
         clang::Preprocessor &PP;
         clang::ASTContext &Ctx;
@@ -32,5 +30,5 @@ namespace cpp2c
                           const clang::MacroDefinition &MD,
                           clang::SourceRange Range,
                           const clang::MacroArgs *Args) override;
-    };
+};
 } // namespace cpp2c
