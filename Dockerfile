@@ -16,6 +16,9 @@ RUN apt install -y cmake
 RUN apt install -y libclang-14-dev
 RUN apt install -y llvm-14
 
+# Install dev dependencies
+RUN apt install -y clang-format
+
 # Install dependencies for Maki's Python scripts
 RUN apt install -y software-properties-common
 RUN add-apt-repository ppa:deadsnakes/ppa
