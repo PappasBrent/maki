@@ -328,6 +328,29 @@ void Cpp2CASTConsumer::HandleTranslationUnit(clang::ASTContext &Ctx) {
         auto &SM = Ctx.getSourceManager();
         auto &LO = Ctx.getLangOpts();
 
+        // Only pretty print JSON if debug is on
+        const char sep = Debug ? '\n' : ' ';
+
+        auto entryString = [](std::string k, std::string v) -> std::string {
+                return "    \"" + k + "\" : \"" + v + "\"";
+        };
+
+        auto entryInt = [](std::string k, int v) -> std::string {
+                return "    \"" + k + "\" : " + std::to_string(v);
+        };
+
+        auto entryBool = [](std::string k, bool v) -> std::string {
+                return "    \"" + k + "\" : " + (v ? "true" : "false");
+        };
+
+        bool emittedOneObject = false;
+
+        auto potentialLeadingComma = [&emittedOneObject](void) -> char {
+                return emittedOneObject ? ',' : ' ';
+        };
+
+        llvm::outs() << "[\n";
+
         // Print definition information
         for (auto &&Entry : DC->MacroNamesDefinitions) {
                 std::string Name = Entry.first, DefLocOrError;
@@ -347,8 +370,16 @@ void Cpp2CASTConsumer::HandleTranslationUnit(clang::ASTContext &Ctx) {
                 auto MI = MD->getMacroInfo();
                 assert(MI);
 
-                print("Definition", Name, MI->isObjectLike(), Valid,
-                      DefLocOrError);
+                llvm::outs()
+                        << potentialLeadingComma() << "{" << sep
+                        << entryString("PropertiesOf", "Definition") << ','
+                        << sep << entryString("Name", Name) << ',' << sep
+                        << entryBool("IsObjectLike", MI->isObjectLike()) << ','
+                        << sep << entryBool("IsDefinitionLocationValid", Valid)
+                        << ',' << sep
+                        << entryString("DefinitionLocation", DefLocOrError)
+                        << sep << "}\n";
+                emittedOneObject = true;
         }
 
         // Collect declaration ranges
@@ -364,8 +395,13 @@ void Cpp2CASTConsumer::HandleTranslationUnit(clang::ASTContext &Ctx) {
         });
 
         // Print names of macros inspected by the preprocessor
-        for (auto &&Name : DC->InspectedMacroNames)
-                print("InspectedByCPP", Name);
+        for (auto &&Name : DC->InspectedMacroNames) {
+                llvm::outs()
+                        << potentialLeadingComma() << "{" << sep
+                        << entryString("PropertiesOf", "InspectedByCPP") << ','
+                        << sep << entryString("Name", Name) << sep << "}\n";
+                emittedOneObject = true;
+        }
         // Print include-directive information
         {
                 std::set<llvm::StringRef> LocalIncludes;
@@ -384,7 +420,15 @@ void Cpp2CASTConsumer::HandleTranslationUnit(clang::ASTContext &Ctx) {
                         IncludeName = Res.second.empty() ? "" :
                                                            Res.second.str();
 
-                        print("Include", Valid, IncludeName);
+                        llvm::outs()
+                                << potentialLeadingComma() << "{" << sep
+                                << entryString("PropertiesOf", "Include") << ','
+                                << sep
+                                << entryBool("IsIncludeLocationValid", Valid)
+                                << ',' << sep
+                                << entryString("IncludeName", IncludeName)
+                                << sep << "}\n";
+                        emittedOneObject = true;
                 }
         }
         debug("Finished checking includes");
@@ -1125,19 +1169,6 @@ void Cpp2CASTConsumer::HandleTranslationUnit(clang::ASTContext &Ctx) {
                                 });
                 }
 
-                auto entryString = [](std::string k,
-                                      std::string v) -> std::string {
-                        return "    \"" + k + "\" : \"" + v + "\"";
-                };
-
-                auto entryInt = [](std::string k, int v) -> std::string {
-                        return "    \"" + k + "\" : " + std::to_string(v);
-                };
-
-                auto entryBool = [](std::string k, bool v) -> std::string {
-                        return "    \"" + k + "\" : " + (v ? "true" : "false");
-                };
-
                 std::vector<std::pair<std::string, std::string> >
                         stringEntries = {
                                 { "Name", Name },
@@ -1230,10 +1261,8 @@ void Cpp2CASTConsumer::HandleTranslationUnit(clang::ASTContext &Ctx) {
                           IsAnyArgumentNotAnExpression },
                 };
 
-                // Only pretty print JSON if debug is on
-                const char sep = Debug ? '\n' : ' ';
-
-                llvm::outs() << "Invocation" << delim << '{' << sep;
+                llvm::outs() << potentialLeadingComma() << '{' << sep
+                             << "\"PropertiesOf\" : \"Invocation\"," << sep;
                 for (auto &&e : stringEntries)
                         llvm::outs()
                                 << entryString(e.first, e.second) << "," << sep;
@@ -1248,7 +1277,10 @@ void Cpp2CASTConsumer::HandleTranslationUnit(clang::ASTContext &Ctx) {
                                 << sep;
                 }
                 llvm::outs() << " }\n";
+                emittedOneObject = true;
         }
+
+        llvm::outs() << "]\n";
 
         // Only delete top level expansions since deconstructor deletes
         // nested expansions
