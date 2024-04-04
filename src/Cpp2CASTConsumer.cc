@@ -566,46 +566,48 @@ void Cpp2CASTConsumer::HandleTranslationUnit(clang::ASTContext &Ctx) {
                         InvocationLocation, ASTKind, TypeSignature;
 
                 // Integer properties
-                int InvocationDepth, NumASTRoots, NumArguments;
+                int InvocationDepth;
+                int NumASTRoots;
+                int NumArguments;
 
                 // Boolean properties
-                bool HasStringification, HasTokenPasting, HasAlignedArguments,
-                        HasSameNameAsOtherDeclaration,
-
-                        IsExpansionControlFlowStmt,
-
-                        DoesBodyReferenceMacroDefinedAfterMacro,
-                        DoesBodyReferenceDeclDeclaredAfterMacro,
-                        DoesBodyContainDeclRefExpr,
-                        DoesSubexpressionExpandedFromBodyHaveLocalType,
-                        DoesSubexpressionExpandedFromBodyHaveTypeDefinedAfterMacro,
-
-                        DoesAnyArgumentHaveSideEffects,
-                        DoesAnyArgumentContainDeclRefExpr,
-
-                        IsHygienic, IsDefinitionLocationValid,
-                        IsInvocationLocationValid, IsObjectLike,
-                        IsInvokedInMacroArgument, IsNamePresentInCPPConditional,
-                        IsExpansionICE,
-
-                        IsExpansionTypeNull, IsExpansionTypeAnonymous,
-                        IsExpansionTypeLocalType,
-                        IsExpansionTypeDefinedAfterMacro, IsExpansionTypeVoid,
-
-                        IsAnyArgumentTypeNull, IsAnyArgumentTypeAnonymous,
-                        IsAnyArgumentTypeLocalType,
-                        IsAnyArgumentTypeDefinedAfterMacro,
-                        IsAnyArgumentTypeVoid,
-
-                        IsInvokedWhereModifiableValueRequired,
-                        IsInvokedWhereAddressableValueRequired,
-                        IsInvokedWhereICERequired,
-
-                        IsAnyArgumentExpandedWhereModifiableValueRequired,
-                        IsAnyArgumentExpandedWhereAddressableValueRequired,
-                        IsAnyArgumentConditionallyEvaluated,
-                        IsAnyArgumentNeverExpanded,
-                        IsAnyArgumentNotAnExpression;
+                bool HasStringification = false;
+                bool HasTokenPasting = false;
+                bool HasAlignedArguments = false;
+                bool HasSameNameAsOtherDeclaration = false;
+                bool IsExpansionControlFlowStmt = false;
+                bool DoesBodyReferenceMacroDefinedAfterMacro = false;
+                bool DoesBodyReferenceDeclDeclaredAfterMacro = false;
+                bool DoesBodyContainDeclRefExpr = false;
+                bool DoesSubexpressionExpandedFromBodyHaveLocalType = false;
+                bool DoesSubexpressionExpandedFromBodyHaveTypeDefinedAfterMacro = false;
+                bool DoesAnyArgumentHaveSideEffects = false;
+                bool DoesAnyArgumentContainDeclRefExpr = false;
+                bool IsHygienic = false;
+                bool IsDefinitionLocationValid = false;
+                bool IsInvocationLocationValid = false;
+                bool IsObjectLike = false;
+                bool IsInvokedInMacroArgument = false;
+                bool IsNamePresentInCPPConditional = false;
+                bool IsExpansionICE = false;
+                bool IsExpansionTypeNull = false;
+                bool IsExpansionTypeAnonymous = false;
+                bool IsExpansionTypeLocalType = false;
+                bool IsExpansionTypeDefinedAfterMacro = false;
+                bool IsExpansionTypeVoid = false;
+                bool IsAnyArgumentTypeNull = false;
+                bool IsAnyArgumentTypeAnonymous = false;
+                bool IsAnyArgumentTypeLocalType = false;
+                bool IsAnyArgumentTypeDefinedAfterMacro = false;
+                bool IsAnyArgumentTypeVoid = false;
+                bool IsInvokedWhereModifiableValueRequired = false;
+                bool IsInvokedWhereAddressableValueRequired = false;
+                bool IsInvokedWhereICERequired = false;
+                bool IsAnyArgumentExpandedWhereModifiableValueRequired = false;
+                bool IsAnyArgumentExpandedWhereAddressableValueRequired = false;
+                bool IsAnyArgumentConditionallyEvaluated = false;
+                bool IsAnyArgumentNeverExpanded = false;
+                bool IsAnyArgumentNotAnExpression = false;
 
                 Name = Exp->Name.str();
                 InvocationDepth = Exp->Depth;
