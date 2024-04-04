@@ -32,6 +32,7 @@ config.host_arch = "@HOST_ARCH@"
 config.cpp2c_src_root = "@CMAKE_SOURCE_DIR@"
 config.cpp2c_obj_root = "@CMAKE_BINARY_DIR@"
 config.file_check_path = "@FILECHECK_PATH@"
+config.clang_path = "@CLANG_C_COMPILER@"
 
 # Support substitution of the tools_dir with user parameters. This is
 # used when we can't determine the tool dir at configuration time.

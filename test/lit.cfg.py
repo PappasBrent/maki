@@ -50,7 +50,7 @@ config.cpp2c_tools_dir = os.path.join(config.cpp2c_obj_root, "bin")
 tools = [
     ToolSubst(
         "cpp2c",
-        "clang"
+        f"{config.clang_path}"
         f" -fplugin={config.cpp2c_obj_root}/lib/libcpp2c.so"
         " -iquote ./Tests/"
         " -fsyntax-only"
