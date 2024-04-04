@@ -2,7 +2,7 @@ FROM ubuntu:22.04
 
 LABEL maintainer="pappasbrent@gmail.com"
 
-# Create the directoy /maki in the image, and make it the working directory
+# Create the directory /maki in the image, and make it the working directory
 WORKDIR /maki
 
 ## Set up the base Ubuntu image
