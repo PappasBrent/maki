@@ -26,6 +26,11 @@ RUN apt install -y python3.10 python3-pip
 RUN python3 -m pip install -U numpy
 RUN python3 -m pip install -U scan-build
 
+# Install testing dependencies
+RUN python3 -m pip install lit
+RUN apt install -y llvm-14-dev
+RUN apt install -y jq
+
 # Install dependencies for evaluation programs
 RUN apt install -y autoconf
 RUN apt install -y ed
