@@ -34,7 +34,7 @@ instructions on how to build and run Maki to replicate these results.
 
 We are applying for the **available** and **reusable** badges. We believe this
 artifact deserves the available badge because it is publicly available on Zenodo
-at https://doi.org/10.5281/zenodo.7783131 (DOI 10.5281/zenodo.7783131). We
+at <https://doi.org/10.5281/zenodo.7783131> (DOI 10.5281/zenodo.7783131). We
 believe this artifact deserves the reusable badge because it includes
 instructions for reproducing all the paper's major results, along with a dataset
 one may verify them against. This artifact also utilizes Docker to facilitate
@@ -48,9 +48,9 @@ paper’s preprint if publicly available.
 -->
 
 The artifact as reported in the original paper is available on Zenodo
-(https://doi.org/10.5281/zenodo.7783131). A pre-print of the original paper
+(<https://doi.org/10.5281/zenodo.7783131>). A pre-print of the original paper
 referencing this artifact can be found here:
-https://pappasbrent.com/assets/Semantic_Analysis_of_Macro_Usage_for_Portability_-_Preprint.pdf.
+<https://pappasbrent.com/assets/Semantic_Analysis_of_Macro_Usage_for_Portability_-_Preprint.pdf>.
 
 ## Data
 
@@ -224,11 +224,57 @@ docker cp maki-container:/maki/README.md .
 
 ### Testing
 
-The test suite for Maki's Clang plugin is located in the `tests` directory. At
-the bottom of each test file, there are comments listing the macro invocation
-properties that Maki is expected to predict for that file. The test suite is not
-automated, so to run the test suite one must run Maki on each file manually
-using the command shown in the section _[Basic Usage](#basic-usage)_.
+Maki's test suite is located in the `tests/Tests` directory and automated with
+[LLVM LIT](https://llvm.org/docs/CommandGuide/lit.html) and
+[`FileCheck`](https://llvm.org/docs/CommandGuide/FileCheck.html). If you used the
+provided Dockerfile to build Maki, then these dependencies are already
+installed, and you can run Maki's test suite with the command:
+
+```bash
+mkdir -p build
+cmake -S . -B build/ \
+    -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
+    -DMAKI_ENABLE_TESTING=ON \
+    -DLLVM_EXTERNAL_LIT=/usr/local/bin/lit \
+    -DFILECHECK_PATH=/usr/bin/FileCheck-14
+cmake --build build/ -t check-cpp2c
+```
+
+Otherwise, you will first need to download the following dependencies:
+
+- The Python `lit` script from [PyPi](https://pypi.org/project/lit/):
+
+  ```bash
+  python3 -m pip install lit
+  ```
+
+- `FileCheck` as one of LLVM's dev dependencies:
+
+  ```bash
+  sudo apt install llvm-dev
+  ```
+
+- `jq` from your package manager, e.g.,
+
+  ```bash
+  sudo apt install jq
+  ```
+
+Then from the project root, run the following command to configure Maki with
+testing enabled and to run its test suite:
+
+```bash
+mkdir -p build
+cmake -S . -B build/ \
+    -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
+    -DMAKI_ENABLE_TESTING=ON \
+    -DLLVM_EXTERNAL_LIT=<lit_path> \
+    -DFILECHECK_PATH=<filecheck_path>
+cmake --build build/ -t check-cpp2c
+```
+
+Where `<lit_path>` and `<filecheck_path` are the paths to your `lit` Python
+script and `FileCheck` binary, respectively.
 
 ### Replicating major paper results (kicking the tires)
 

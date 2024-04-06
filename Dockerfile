@@ -2,7 +2,7 @@ FROM ubuntu:22.04
 
 LABEL maintainer="pappasbrent@gmail.com"
 
-# Create the directoy /maki in the image, and make it the working directory
+# Create the directory /maki in the image, and make it the working directory
 WORKDIR /maki
 
 ## Set up the base Ubuntu image
@@ -25,6 +25,11 @@ RUN add-apt-repository ppa:deadsnakes/ppa
 RUN apt install -y python3.10 python3-pip
 RUN python3 -m pip install -U numpy
 RUN python3 -m pip install -U scan-build
+
+# Install testing dependencies
+RUN python3 -m pip install lit
+RUN apt install -y llvm-14-dev
+RUN apt install -y jq
 
 # Install dependencies for evaluation programs
 RUN apt install -y autoconf
