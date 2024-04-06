@@ -64,12 +64,12 @@ where `filename` is the name of the C file whose macro usage you would like to a
    ```
 6. Now to get the data presented in the figures in the evaluation section, run the script associated with each figure:
     ```
-   python3 get_figure_2_data.py all_raw_data.csv
-   python3 get_figure_3_data.py all_raw_data.csv
-   python3 get_figure_4_data.py all_raw_data.csv
+   python3 get_figure_2_data.py all_raw_data.json
+   python3 get_figure_3_data.py all_raw_data.json
+   python3 get_figure_4_data.py all_raw_data.json
    ```
 
-   Note: Step 5 should have created the file `all_raw_data.csv`.
+   Note: Step 5 should have created the file `all_raw_data.json`.
 7. To get the data on program runtime, run:
    ```
    python3 analyze_times.py invocation_analysis_times_csv definition_analysis_times_csv

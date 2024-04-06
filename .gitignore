@@ -1,3 +1,6 @@
+.DS_Store
+all_raw_data.csv
+all_raw_data.json
 .vscode
 build
 *.cpp2c
