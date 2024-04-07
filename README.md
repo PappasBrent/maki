@@ -433,3 +433,22 @@ sudo apt install clang-format
 Please format all your changes to Maki's C++ code with ClangFormat before
 committing them. This is to ensure that the project's coding style remains
 consistent.
+
+## Patch files mapping
+
+To decrease the length of file names used for the accepted and rejected 
+linux patch submissions, the code uses file names PATCH_Ref_# (# is a
+number) as a substitute for the full name of the patch.  The mapping of
+patch reference to submitted patch is as follows:
+
+Accepted Patches:
+PATCH_Ref_1	== PATCH-1-1-staging-gdm724x-Replace-macro-GDM_TTY_READY-with-static-inline-function.mbox
+PATCH_Ref_2	== PATCH-media-atomisp-pci-hive_isp_css_common-host-vmem-Replace-SUBWORD-macros-with-functions.mbox
+PATCH_Ref_3	== PATCH-media-atomisp-pci-sh_css-Replace-macro-STATS_ENABLED-with-function.mbox
+PATCH_Ref_4	== PATCH-media-imx-imx-media-fim-Replace-macro-icap_enabled-with-function.mbox
+PATCH_Ref_5	== PATCH-staging-media-atomisp-pci-Replace-bytes-macros-with-functions.mbox
+PATCH_Ref_6	== PATCH-v2-staging-greybus-gpio-Replace-macro-irq_data_to_gpio_chip-with-function.mbox
+
+Rejected Patches:
+PATCH_Ref_7 == PATCH-mdeia-ipu3-ipu33-mmu-Replace-macro-IPU3_ADDR2PTE-with-a-function.mbox
+PATCH_Ref_8 == PATCH-staging-iio-frequency-ad9832-Replace-macro-AD9832_PHASE-with-function.mbox
