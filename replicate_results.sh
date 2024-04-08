@@ -21,7 +21,7 @@ mkdir -p time_data
 python3 analyze_macro_invocations_in_programs.py ../build/lib/libcpp2c.so ./time_data/invocation_analysis_times.csv 8
 
 # Analayze macro definitions in all programs and record performance data
-python3 analyze_macro_definitions_in_programs.py ./time_data/defn_analysis_times.csv
+python3 analyze_macro_defns_in_programs.py ./time_data/defn_analysis_times.csv
 
 # Generate CSV files behind figures
 mkdir -p figure_data
