@@ -23,7 +23,7 @@ add_library(cpp2c SHARED
   AlignmentMatchers.cc
   Cpp2CAction.cc
   Cpp2CASTConsumer.cc
-  DefinitionInfoCollector.cc
+  DefnInfoCollector.cc
   DeclStmtTypeLoc.cc
   DeclCollectorMatchHandler.cc
   ExpansionMatchHandler.cc

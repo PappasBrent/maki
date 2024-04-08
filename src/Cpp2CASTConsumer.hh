@@ -1,6 +1,6 @@
 #pragma once
 
-#include "DefinitionInfoCollector.hh"
+#include "DefnInfoCollector.hh"
 #include "IncludeCollector.hh"
 #include "MacroForest.hh"
 
@@ -12,7 +12,7 @@ class Cpp2CASTConsumer : public clang::ASTConsumer {
     private:
         cpp2c::MacroForest *MF;
         cpp2c::IncludeCollector *IC;
-        cpp2c::DefinitionInfoCollector *DC;
+        cpp2c::DefnInfoCollector *DC;
 
     public:
         Cpp2CASTConsumer(clang::CompilerInstance &CI);

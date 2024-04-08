@@ -13,7 +13,7 @@
 #include <vector>
 
 namespace cpp2c {
-class DefinitionInfoCollector : public clang::PPCallbacks {
+class DefnInfoCollector : public clang::PPCallbacks {
     private:
         clang::SourceManager &SM;
         const clang::LangOptions &LO;
@@ -23,7 +23,7 @@ class DefinitionInfoCollector : public clang::PPCallbacks {
                 MacroNamesDefinitions;
         std::set<std::string> InspectedMacroNames;
 
-        DefinitionInfoCollector(clang::ASTContext &Ctx);
+        DefnInfoCollector(clang::ASTContext &Ctx);
 
         void MacroDefined(const clang::Token &MacroNameTok,
                           const clang::MacroDirective *MD) override;
