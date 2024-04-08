@@ -98,35 +98,29 @@ def main():
 
     pd = PreprocessorData()
 
-    # src directory, to be initialized during the analysis
-    src_dir = ''
+    # src directory
+    src_dir = ""
 
     for line in lines:
-        line = line.rstrip()
-
-        if line.startswith('Src'):
-            _, src_dir = line.split(DELIM)
-
-        elif line.startswith('Define'):
-            _, Name, IsObjectLike, IsDefLocValid, DefLocOrError = line.split(
-                DELIM)
-            m = Macro(Name, IsObjectLike == 'T',
-                      IsDefLocValid == 'T', DefLocOrError)
+        if line.lstrip().startswith("Src"):
+            _, src_dir = line.rstrip().split(DELIM)
+            continue
+        if not line.strip() or line.strip() in ("[", "]"):
+            continue
+        entry = json.loads(line.lstrip(","))
+        if entry["PropertiesOf"] == "Define":
+            m = Macro(entry["Name"], entry["IsObjectLike"],
+                      entry["IsDefinitionLocationValid"], entry["DefinitionLocation"])
             if m not in pd.mm:
                 pd.mm[m] = set()
-
-        elif line.startswith('InspectedByCPP'):
-            _, Name = line.split(DELIM)
-            pd.inspected_macro_names.add(Name)
-
-        elif line.startswith('Include'):
-            _, Valid, IncludedFileRealPath = line.split(DELIM)
-            if Valid == 'F':
-                pd.local_includes.add(IncludedFileRealPath)
-
-        elif line.startswith('Invocation'):
-            _, j = line.split(DELIM, 1)
-            i = Invocation(**(json.loads(j)))
+        elif entry["PropertiesOf"] == 'InspectedByCPP':
+            pd.inspected_macro_names.add(entry["Name"])
+        elif entry["PropertiesOf"] == "Include":
+            if entry["IsIncludeLocationValid"]:
+                pd.local_includes.add(entry["IncludeName"])
+        elif entry["PropertiesOf"] == 'Invocation':
+            del entry["PropertiesOf"]
+            i = Invocation(**entry)
             m = Macro(i.Name,
                       i.IsObjectLike,
                       i.IsDefinitionLocationValid,
@@ -135,6 +129,7 @@ def main():
             # location if they are the same nested invocation
             if all([j.InvocationLocation != i.InvocationLocation for j in pd.mm[m]]):
                 pd.mm[m].add(i)
+
 
     # src_pd only records preprocessor data about source macros
     src_pd = PreprocessorData(
