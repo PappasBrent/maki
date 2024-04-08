@@ -317,11 +317,11 @@ Cpp2CASTConsumer::Cpp2CASTConsumer(clang::CompilerInstance &CI) {
 
         MF = new cpp2c::MacroForest(PP, Ctx);
         IC = new cpp2c::IncludeCollector();
-        DC = new cpp2c::DefinitionInfoCollector(Ctx);
+        DC = new cpp2c::DefnInfoCollector(Ctx);
 
         PP.addPPCallbacks(std::unique_ptr<cpp2c::MacroForest>(MF));
         PP.addPPCallbacks(std::unique_ptr<cpp2c::IncludeCollector>(IC));
-        PP.addPPCallbacks(std::unique_ptr<cpp2c::DefinitionInfoCollector>(DC));
+        PP.addPPCallbacks(std::unique_ptr<cpp2c::DefnInfoCollector>(DC));
 }
 
 void Cpp2CASTConsumer::HandleTranslationUnit(clang::ASTContext &Ctx) {
