@@ -1,10 +1,10 @@
-#include "MacroExpansionArgument.hh"
+#include "MacroExpansionArg.hh"
 
 #include "clang/Basic/SourceManager.h"
 #include "clang/Lex/Lexer.h"
 
 namespace cpp2c {
-void MacroExpansionArgument::dumpASTInfo(llvm::raw_fd_ostream &OS,
+void MacroExpansionArg::dumpASTInfo(llvm::raw_fd_ostream &OS,
                                          clang::SourceManager &SM,
                                          const clang::LangOptions &LO) {
         OS << "Argument " << Name << " tokens:\n";

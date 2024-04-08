@@ -1,7 +1,7 @@
 #pragma once
 
 #include "DeclStmtTypeLoc.hh"
-#include "MacroExpansionArgument.hh"
+#include "MacroExpansionArg.hh"
 
 #include "clang/AST/Stmt.h"
 #include "clang/Basic/SourceLocation.h"
@@ -45,17 +45,17 @@ class MacroExpansionNode {
         // The AST root this expansion is aligned with, if any
         DeclStmtTypeLoc *AlignedRoot = nullptr;
         // The arguments to this macro invocation, if any
-        std::vector<MacroExpansionArgument> Arguments;
+        std::vector<MacroExpansionArg> Arguments;
         // The macro argument that that the expanded macro's definition
         // begins with.
         // If the macro's definition does not begin with an argument,
         // this is the nullptr.
-        MacroExpansionArgument *ArgDefBeginsWith = nullptr;
+        MacroExpansionArg *ArgDefBeginsWith = nullptr;
         // The macro argument that that the expanded macro's definition
         // ends with.
         // If the macro's definition does not end with an argument,
         // this is the nullptr.
-        MacroExpansionArgument *ArgDefEndsWith = nullptr;
+        MacroExpansionArg *ArgDefEndsWith = nullptr;
         // Whether this macro performs stringification
         bool HasStringification = false;
         // Whether this macro performs token-pasting
