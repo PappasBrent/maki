@@ -39,13 +39,15 @@ def main():
             ('Total', total_aligned, total_interface_equivalent))
 
         json_data = []
-        
+
         for p, a, b in program_alignment_adaptations:
             json_data.append({'Program': p, 'Percentage of aligned definitions': a, 'Percentage of interface-equivalent definitions': b})
-        
+
+
         print(json.dumps(json_data, indent=4))
-        
-        with open(f'{args.json_file}.json', 'w') as fp:
+        if not args.json_file.endswith(".json"):
+            args.json_file += ".json"
+        with open(f'{args.json_file}', 'w') as fp:
             json.dump(json_data, fp)
 
 if __name__ == '__main__':

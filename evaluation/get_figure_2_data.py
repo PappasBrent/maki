@@ -43,17 +43,19 @@ def main():
                         / int(program_to_macros_defined_at_valid_src_locs[row[0]]))),
                   reverse=True)
         rows.append(('Total', *total_row[1:]))
-        
+
         keys = ['Program','Definition-adapting','Calling-convention-adapting','Scope-adapting','Multiple interface-equivalent adaptations','Call-site-context-altering','Thunkizing','Metaprogramming','Nested invocations','Multiple non-interface-equivalent adaptations']
-        
+
         json_data = []
-        
+
         for row in rows:
             json_data.append(dict(zip(keys, row)))
-        
+
         print(json.dumps(json_data, indent=4))
-                
-        with open(f'{args.json_file}.json', 'w') as fp:
+
+        if not args.json_file.endswith(".json"):
+            args.json_file += ".json"
+        with open(f'{args.json_file}', 'w') as fp:
             json.dump(json_data, fp)
 
 if __name__ == '__main__':
