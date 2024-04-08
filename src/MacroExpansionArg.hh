@@ -10,7 +10,7 @@
 #include <vector>
 
 namespace cpp2c {
-class MacroExpansionArgument {
+class MacroExpansionArg {
     public:
         // The name of the parameter this argument expands
         llvm::StringRef Name;

@@ -29,7 +29,7 @@ add_library(cpp2c SHARED
   ExpansionMatchHandler.cc
   IncludeCollector.cc
   MacroForest.cc
-  MacroExpansionArgument.cc
+  MacroExpansionArg.cc
   MacroExpansionNode.cc
   StmtCollectorMatchHandler.cc
 )

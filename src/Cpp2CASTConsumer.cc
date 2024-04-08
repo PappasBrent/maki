@@ -636,7 +636,7 @@ void Cpp2CASTConsumer::HandleTranslationUnit(clang::ASTContext &Ctx) {
                                                        Exp->Arguments.begin(),
                                                        Exp->Arguments.end(),
                                                        [&Entry](
-                                                               MacroExpansionArgument
+                                                               MacroExpansionArg
                                                                        Arg) {
                                                                return Arg.Name.str() ==
                                                                       Entry.first;
@@ -764,7 +764,7 @@ void Cpp2CASTConsumer::HandleTranslationUnit(clang::ASTContext &Ctx) {
                         debug("Checking if arguments are all aligned");
                         HasAlignedArguments = std::all_of(
                                 Exp->Arguments.begin(), Exp->Arguments.end(),
-                                [](MacroExpansionArgument Arg) {
+                                [](MacroExpansionArg Arg) {
                                         return Arg.AlignedRoots.size() ==
                                                Arg.NumExpansions;
                                 });
