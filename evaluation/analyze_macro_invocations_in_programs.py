@@ -37,7 +37,7 @@ def main():
                 print(f"info: skipping {p.name}, already evaluated")
                 continue
 
-            cmd = f'./analyze_macro_invocations_in_program.py "{args.cpp2c_so_path}" "{p_extracted_path}" "{src_dir}" "{dst_dir}" {args.num_threads}'
+            cmd = f'python3 analyze_macro_invocations_in_program.py "{args.cpp2c_so_path}" "{p_extracted_path}" "{src_dir}" "{dst_dir}" {args.num_threads}'
             print(cmd)
             t0 = datetime.now()
             run(cmd, shell=True).check_returncode()

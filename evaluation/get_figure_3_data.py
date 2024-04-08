@@ -21,14 +21,16 @@ def main():
 
         program_improvement.sort(key=itemgetter(1), reverse=True)
         program_improvement.append(('Total', total_improvement))
-        
+
         json_data = []
         for program, improvement in program_improvement:
             json_data.append({'Program': program, 'How times more easily portable macros Maki finds over prior work': improvement})
-        
+
         print(json.dumps(json_data, indent=4))
-        
-        with open(f'{args.json_file}.json', 'w') as fp:
+
+        if not args.json_file.endswith(".json"):
+            args.json_file += ".json"
+        with open(f'{args.json_file}', 'w') as fp:
             json.dump(json_data, fp)
 
 if __name__ == '__main__':
