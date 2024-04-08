@@ -110,7 +110,7 @@ datasets/
 │                                  sample for which Maki reported a false
 │                                  positive.
 ├── time_data - Contains data on Maki's performance.
-│   ├── definition_analysis_times.csv - Contains performance data for analyzing
+│   ├── defn_analysis_times.csv - Contains performance data for analyzing
 │   │                                   macro definitions across all programs.
 │   └── invocation_analysis_times.csv - Contains performance data for analyzing
 │                                       macro invocations across all programs.
@@ -281,7 +281,7 @@ with how to interpret them, are as follows:
     generate Figure 4 in the original paper.
 
 - `evaluation/time_data/`: Contains CSV files reporting Maki's performance data.
-  - `evaluation/time_data/definition_analysis_times.csv`: Lists the time elapsed
+  - `evaluation/time_data/defn_analysis_times.csv`: Lists the time elapsed
     for Maki to analyze all macro definitions in each program.
   - `evaluation/time_data/invocation_analysis_times.csv`: Lists time elapsed for
     Maki to analyze all macro invocations in each program.
