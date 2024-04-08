@@ -9,7 +9,7 @@ from typing import Callable, List, Set
 
 from analysis import Analysis, MacroStat, definition_stat, invocation_stat
 from macros import Invocation, Macro, PreprocessorData
-from predicates.argument_altering import aa_invocation
+from predicates.arg_altering import aa_invocation
 from predicates.call_site_context_altering import csca_invocation
 from predicates.declaration_altering import da_invocation
 from predicates.interface_equivalent import ie_def
