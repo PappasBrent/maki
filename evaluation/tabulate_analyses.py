@@ -1,6 +1,4 @@
 #!/usr/bin/python3
-
-import csv
 import json
 import os
 from math import inf
@@ -34,10 +32,8 @@ def stat_percent(row_data: dict, numerator_field: str) -> float:
                     else 'src_invocations_at_unique_valid_locations']))
 
 
-def write_table(ofp, macro_type: str) -> None:
-    w = csv.DictWriter(ofp, FIELD_NAMES, delimiter=DELIM,
-                       quoting=csv.QUOTE_MINIMAL)
-    w.writeheader()
+def write_table(macro_type: str) -> None:
+    json_data = []
 
     totals = None
 
@@ -107,7 +103,7 @@ def write_table(ofp, macro_type: str) -> None:
             if key != 'program' and key != 'x_more_easy_to_transform_macros_we_find_than_mennie' and key not in DENOMINATOR_FIELDS:
                 row_data[key] = f'{row_data[key]} ({stat_percent(row_data, key)}%)'
 
-        w.writerow(row_data)
+        json_data.append(row_data)
 
     # Overall improvement
     totals['x_more_easy_to_transform_macros_we_find_than_mennie'] = (
@@ -121,13 +117,14 @@ def write_table(ofp, macro_type: str) -> None:
         if key not in ['program', 'x_more_easy_to_transform_macros_we_find_than_mennie', *DENOMINATOR_FIELDS]:
             totals[key] = f'{round(totals[key], 2)} ({stat_percent(totals, key)}%)'
 
-    w.writerow(totals)
+    json_data.append(totals)
+    
+    return json_data
 
 
 def main():
-    with open('all_raw_data.csv', 'w', newline='') as ofp:
-        write_table(ofp, 'total')
-
+    with open('all_raw_data.json', 'w') as ofp:
+        json.dump(write_table('total'), ofp, indent=4)
 
 if __name__ == '__main__':
     main()

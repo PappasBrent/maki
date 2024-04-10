@@ -1,9 +1,7 @@
 #!/usr/bin/python3
-
 from argparse import ArgumentParser
-from csv import DictReader
 from operator import itemgetter
-
+import json
 
 def extract_percentage(s: str) -> float:
     return float(s[(s.index('(') + 1): s.index('%')])
@@ -12,10 +10,11 @@ def extract_percentage(s: str) -> float:
 def main():
     ap = ArgumentParser()
     ap.add_argument('data_file')
+    ap.add_argument('json_file')
     args = ap.parse_args()
 
     with open(args.data_file) as fp:
-        reader = DictReader(fp)
+        reader = json.load(fp)
         program_alignment_adaptations = []
         for row in reader:
             program_alignment_adaptations.append(
@@ -39,10 +38,17 @@ def main():
         program_alignment_adaptations.append(
             ('Total', total_aligned, total_interface_equivalent))
 
-        print('Program,Percentage of aligned definitions,Percentage of interface-equivalent definitions')
-        for p, a, b in program_alignment_adaptations:
-            print(f'{p},{a},{b}')
+        json_data = []
 
+        for p, a, b in program_alignment_adaptations:
+            json_data.append({'Program': p, 'Percentage of aligned definitions': a, 'Percentage of interface-equivalent definitions': b})
+
+
+        print(json.dumps(json_data, indent=4))
+        if not args.json_file.endswith(".json"):
+            args.json_file += ".json"
+        with open(f'{args.json_file}', 'w') as fp:
+            json.dump(json_data, fp)
 
 if __name__ == '__main__':
     main()

@@ -1,8 +1,6 @@
 #!/usr/bin/python3
-
 from argparse import ArgumentParser
-from csv import DictReader
-
+import json
 
 def extract_raw_data(s: str) -> float:
     return int(s[: s.index('(')])
@@ -11,10 +9,11 @@ def extract_raw_data(s: str) -> float:
 def main():
     ap = ArgumentParser()
     ap.add_argument('data_file')
+    ap.add_argument('json_file')
     args = ap.parse_args()
 
     with open(args.data_file) as fp:
-        reader = DictReader(fp)
+        reader = json.load(fp)
         rows = []
         program_to_macros_defined_at_valid_src_locs = {}
         for row in reader:
@@ -45,10 +44,19 @@ def main():
                   reverse=True)
         rows.append(('Total', *total_row[1:]))
 
-        print('Program,Definition-adapting,Calling-convention-adapting,Scope-adapting,Multiple interface-equivalent adaptations,Call-site-context-altering,Thunkizing,Metaprogramming,Nested invocations,Multiple non-interface-equivalent adaptations')
-        for row in rows:
-            print(','.join(map(str, row)))
+        keys = ['Program','Definition-adapting','Calling-convention-adapting','Scope-adapting','Multiple interface-equivalent adaptations','Call-site-context-altering','Thunkizing','Metaprogramming','Nested invocations','Multiple non-interface-equivalent adaptations']
 
+        json_data = []
+
+        for row in rows:
+            json_data.append(dict(zip(keys, row)))
+
+        print(json.dumps(json_data, indent=4))
+
+        if not args.json_file.endswith(".json"):
+            args.json_file += ".json"
+        with open(f'{args.json_file}', 'w') as fp:
+            json.dump(json_data, fp)
 
 if __name__ == '__main__':
     main()

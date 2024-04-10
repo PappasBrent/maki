@@ -26,10 +26,10 @@ python3 analyze_macro_defns_in_programs.py ./time_data/defn_analysis_times.csv
 # Generate CSV files behind figures
 mkdir -p figure_data
 python3 tabulate_analyses.py
-mv all_raw_data.csv figure_data
-python3 get_figure_2_data.py figure_data/all_raw_data.csv > ./figure_data/figure_2_data.csv
-python3 get_figure_3_data.py figure_data/all_raw_data.csv > ./figure_data/figure_3_data.csv
-python3 get_figure_4_data.py figure_data/all_raw_data.csv > ./figure_data/figure_4_data.csv
+mv all_raw_data.json figure_data
+python3 get_figure_2_data.py figure_data/all_raw_data.json ./figure_data/figure_2_data.json
+python3 get_figure_3_data.py figure_data/all_raw_data.json ./figure_data/figure_3_data.json
+python3 get_figure_4_data.py figure_data/all_raw_data.json ./figure_data/figure_4_data.json
 
 # Analyze performance data CSV files
 python3 analyze_times.py ./time_data/invocation_analysis_times.csv ./time_data/defn_analysis_times.csv > ./time_data/total_time_analysis.csv
