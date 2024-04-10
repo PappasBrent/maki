@@ -21,10 +21,10 @@ def parse_timedelta(s: str) -> timedelta:
 def main():
     ap = ArgumentParser()
     ap.add_argument('invocation_analysis_times_csv')
-    ap.add_argument('definition_analysis_times_csv')
+    ap.add_argument('defn_analysis_times_csv')
     args = ap.parse_args()
 
-    with open(args.invocation_analysis_times_csv) as macro_analyzer_times, open(args.definition_analysis_times_csv) as property_analyzer_times:
+    with open(args.invocation_analysis_times_csv) as macro_analyzer_times, open(args.defn_analysis_times_csv) as property_analyzer_times:
         macro_time_reader = DictReader(macro_analyzer_times)
         property_time_reader = DictReader(property_analyzer_times)
 
